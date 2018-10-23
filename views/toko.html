@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cn" style="height: 100%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>通讯稿</title>
+  </head>
+  <body style="font: 1em sans-serif; height: 100%; margin: 0em">
+    <form id="shahon" action="happyo.html" method="POST" style="display: flex; flex-flow: column nowrap; height: 100%; margin: 0em auto; max-width: 64em">
+      <div style="background-color: #1b8bdf; height: 2.5em">
+        <div style="display: flex; height: 2.5em; justify-content: space-between">
+          <button id="modoru" type="button" style="background: transparent; border: none; color: white; cursor: pointer; font: 1em sans-serif; padding: 0em 0.5em"/>取消</a>
+          <button id="happyo" type="submit" style="background: transparent; border: none; color: white; cursor: pointer; font: 1em sans-serif; padding: 0em 0.5em"/>发表</a>
+        </div>
+      </div>
+      <div style="margin: 1em 1em 0.5em 1em">
+        <label>
+          学院：
+          <select name="gakuin" style="font: 1em sans-serif; width: 50%">
+            <option value="计算机学院">计算机学院</option>
+          </select>
+        </label>
+      </div>
+      <div style="margin: 0.5em 1em 0.5em 1em">
+        <label>
+          专业：
+          <select name="senmon" style="font: 1em sans-serif; width: 50%">
+            <option value="计算机科学与技术">计算机科学与技术</option>
+          </select>
+        </label>
+      </div>
+      <div style="flex: 1; margin: 0.5em 1em 0.5em 1em; overflow: hidden">
+        <textarea name="naibun" style="box-sizing: border-box; font: 1em sans-serif; width: 100%; height: 100%; resize: none"></textarea>
+      </div>
+      <div style="color: #777777; font-size: 0.5em; margin: 0.5em 1em 1em 1em; text-align: center">
+        Powered by 易<span style="font-size: 0px">&#9794;</span>班<span style="font-size: 0px">&#9794;</span>开<span style="font-size: 0px">&#9794;</span>放<span style="font-size: 0px">&#9794;</span>平<span style="font-size: 0px">&#9794;</span>台
+      </div>
+    </form>
+    <script>
+      (function(){"use strict";document.getElementById("modoru").addEventListener("click",function(){history.back()})})()
+    </script>
+  </body>
+</html>

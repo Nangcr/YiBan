@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-cn" style="height: 100%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>通讯稿一览</title>
+  </head>
+  <body style="background: #83b7f2; font: 1em sans-serif; height: 100%; margin: 0em">
+    <div style="background-color: #c1dbf8; box-shadow: #7d97b4 0em 0em 1em; min-height: 100%; max-width: 64em; margin: 0em auto">
+      <div style="font: 2em serif; padding: 1em 1em 0em 1em">通讯稿一览</div>
+      <div id="toko"></div>
+    </div>
+    <script>
+      (function() {
+        "use strict";
+        var toko = [{{.Shahons}}];
+        var el0 = document.getElementById("toko");
+        for(var i = toko.length - 1; i >= 0; i--) {
+          var el1 = document.createTextNode("用户：");
+          var el2 = document.createTextNode(toko[i]["user"]);
+          var el3 = document.createElement("div");
+          el3.style.whiteSpace = "pre-wrap";
+          el3.appendChild(el1);
+          el3.appendChild(el2);
+          var el4 = document.createTextNode("学院：");
+          var el5 = document.createTextNode(toko[i]["gakuin"]);
+          var el6 = document.createElement("div");
+          el6.style.whiteSpace = "pre-wrap";
+          el6.appendChild(el4);
+          el6.appendChild(el5);
+          var el7 = document.createTextNode("专业：");
+          var el8 = document.createTextNode(toko[i]["senmon"]);
+          var el9 = document.createElement("div");
+          el9.style.whiteSpace = "pre-wrap";
+          el9.appendChild(el7);
+          el9.appendChild(el8);
+          var el10 = document.createTextNode("日期：");
+          var el11 = document.createTextNode(toko[i]["hiduke"]);
+          var el12 = document.createElement("div");
+          el12.style.whiteSpace = "pre-wrap";
+          el12.appendChild(el10);
+          el12.appendChild(el11);
+          var el13 = document.createTextNode(toko[i]["naibun"]);
+          var el14 = document.createElement("div");
+          el14.style.margin = "1em";
+          el14.style.whiteSpace = "pre-wrap";
+          el14.appendChild(el13);
+          var el15 = document.createElement("div");
+          el15.appendChild(el3);
+          el15.appendChild(el6);
+          el15.appendChild(el9);
+          el15.appendChild(el12);
+          el15.appendChild(el14);
+          el15.style.backgroundColor = toko[i]["kidoku"] ? "#e0edfc" : "#ffffff";
+          el15.style.boxShadow = "#777777 0em 0em 0em";
+          el15.style.boxSizing = "border-box";
+          el15.style.margin = "2em 0em";
+          el15.style.padding = "1em";
+          el15.style.transition = "background-color 0.33s ease, box-shadow 0.33s ease";
+          (function(el15, i) {
+            el15.addEventListener("mouseover", function() {
+              el15.style.backgroundColor = "#ffffff";
+              el15.style.boxShadow = "#777777 0em 0em 2em";
+            });
+            el15.addEventListener("mouseout", function() {
+              el15.style.backgroundColor = toko[i]["kidoku"] ? "#e0edfc" : "#ffffff";
+              el15.style.boxShadow = "#777777 0em 0em 0em";
+            });
+          })(el15, i);
+          el0.appendChild(el15);
+        }
+      })();
+    </script>
+  </body>
+</html>

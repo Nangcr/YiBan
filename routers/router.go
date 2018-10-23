@@ -1,0 +1,13 @@
+package routers
+
+import (
+	"github.com/astaxie/beego"
+	"github.com/nangcr/yiBan/controllers"
+)
+
+func init() {
+	beego.Router("/", &controllers.MainController{})
+	beego.Router("/toko", &controllers.TokoController{})
+	beego.Router("/happyo", &controllers.HappyoController{})
+	beego.Router("/browse", &controllers.BrowseController{})
+}
