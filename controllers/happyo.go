@@ -27,6 +27,7 @@ func (c *HappyoController) Post() {
 		println(err.Error())
 	}
 	s.Hiduke = time.Now().Format("2006-01-02 15:04")
+	s.User = "易班用户"
 	s.Kidoku = "flase"
 	jsons, err := json.Marshal(s)
 	if err != nil {

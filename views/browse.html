@@ -4,13 +4,21 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>通讯稿一览</title>
+    <title>安师大 | 运动会</title>
   </head>
-  <body style="background: #83b7f2; font: 1em sans-serif; height: 100%; margin: 0em">
-    <div style="background-color: #c1dbf8; box-shadow: #7d97b4 0em 0em 1em; min-height: 100%; max-width: 64em; margin: 0em auto">
-      <div style="font: 2em serif; padding: 1em 1em 0em 1em">通讯稿一览</div>
-      <div id="toko"></div>
+  <body style="background: #bedcff; font: 1em sans-serif; height: 100%; margin: 0em; width: 100%;">
+    <div style="background-color: white; box-shadow: #7d97b4 0em 0em 1em; min-height: 100%; max-width: 64em; margin: 0em auto">
+      <div style="font: 1em sans-serif; color: white; background-color: #1b8bdf; text-align: center; vertical-align: middle; height: 2.5em; line-height: 2.5em;">通讯稿一览</div>
+      <nav>
+        <div style="display: flex; height: 2.5em; margin: 1em 2em;">
+          <button id="timetable" type="button" style="background: transparent; border: none; cursor: pointer; font: 1em sans-serif; padding: 0;">日程安排</button>
+          <button id="rank" type="button" style="background: transparent; border: none; cursor: pointer; font: 1em sans-serif; padding: 0; margin: 0 1.5em;">赛事成绩</button>
+          <button id="newsletter" type="button" style="background: transparent; border: none; cursor: pointer; font: 1em sans-serif; padding: 0;">发表稿件</button>
+        </div>
+      </nav>
+      <div id="toko" style="width: 100%;"></div>
     </div>
+    
     <script>
       (function() {
         "use strict";
@@ -20,31 +28,26 @@
           var el1 = document.createTextNode("用户：");
           var el2 = document.createTextNode(toko[i]["user"]);
           var el3 = document.createElement("div");
-          el3.style.whiteSpace = "pre-wrap";
           el3.appendChild(el1);
           el3.appendChild(el2);
           var el4 = document.createTextNode("学院：");
           var el5 = document.createTextNode(toko[i]["gakuin"]);
           var el6 = document.createElement("div");
-          el6.style.whiteSpace = "pre-wrap";
           el6.appendChild(el4);
           el6.appendChild(el5);
           var el7 = document.createTextNode("专业：");
           var el8 = document.createTextNode(toko[i]["senmon"]);
           var el9 = document.createElement("div");
-          el9.style.whiteSpace = "pre-wrap";
           el9.appendChild(el7);
           el9.appendChild(el8);
           var el10 = document.createTextNode("日期：");
           var el11 = document.createTextNode(toko[i]["hiduke"]);
           var el12 = document.createElement("div");
-          el12.style.whiteSpace = "pre-wrap";
           el12.appendChild(el10);
           el12.appendChild(el11);
           var el13 = document.createTextNode(toko[i]["naibun"]);
           var el14 = document.createElement("div");
           el14.style.margin = "1em";
-          el14.style.whiteSpace = "pre-wrap";
           el14.appendChild(el13);
           var el15 = document.createElement("div");
           el15.appendChild(el3);
@@ -52,25 +55,28 @@
           el15.appendChild(el9);
           el15.appendChild(el12);
           el15.appendChild(el14);
-          el15.style.backgroundColor = toko[i]["kidoku"] ? "#e0edfc" : "#ffffff";
+          el15.style.backgroundColor = toko[i]["kidoku"] ? "#e0edfc" : "#bedcff";
           el15.style.boxShadow = "#777777 0em 0em 0em";
           el15.style.boxSizing = "border-box";
-          el15.style.margin = "2em 0em";
+          el15.style.margin = "30px 32px";
           el15.style.padding = "1em";
           el15.style.transition = "background-color 0.33s ease, box-shadow 0.33s ease";
           (function(el15, i) {
             el15.addEventListener("mouseover", function() {
               el15.style.backgroundColor = "#ffffff";
-              el15.style.boxShadow = "#777777 0em 0em 2em";
+              el15.style.boxShadow = "#777777 0em 0em 1em";
             });
             el15.addEventListener("mouseout", function() {
-              el15.style.backgroundColor = toko[i]["kidoku"] ? "#e0edfc" : "#ffffff";
+              el15.style.backgroundColor = toko[i]["kidoku"] ? "#e0edfc" : "#bedcff";
               el15.style.boxShadow = "#777777 0em 0em 0em";
             });
           })(el15, i);
           el0.appendChild(el15);
         }
       })();
+    </script>
+    <script>
+      (function(){"use strict";document.getElementById("timetable").addEventListener("click",function(){window.location.href="./browse.html"});document.getElementById("rank").addEventListener("click",function(e){window.location.href="./rankingu.html"});document.getElementById("newsletter").addEventListener("click",function(e){window.location.href="./toko.html"})})()
     </script>
   </body>
 </html>
