@@ -33,7 +33,7 @@ func (c *HappyoController) Post() {
 	if err != nil {
 		println(err.Error())
 	}
-	f, err := os.OpenFile("database.txt", os.O_APPEND, 0644)
+	f, err := os.OpenFile("database.txt", os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		println(err.Error())
 	}
