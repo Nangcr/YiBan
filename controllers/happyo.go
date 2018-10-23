@@ -13,7 +13,7 @@ type HappyoController struct {
 
 type shahon struct {
 	Id     int    `form:"-"`
-	User   string `form:"-"`
+	User   string `form:"-" json:"user"`
 	Gakuin string `form:"gakuin" json:"gakuin"`
 	Senmon string `form:"senmon" json:"senmon"`
 	Naibun string `form:"naibun" json:"naibun"`
