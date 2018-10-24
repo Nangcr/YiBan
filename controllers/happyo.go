@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/astaxie/beego"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -33,6 +34,9 @@ func (c *HappyoController) Post() {
 	if err != nil {
 		println(err.Error())
 	}
+	var mtx sync.RWMutex
+	mtx.Lock()
+	defer mtx.Unlock()
 	f, err := os.OpenFile("database.txt", os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		println(err.Error())
