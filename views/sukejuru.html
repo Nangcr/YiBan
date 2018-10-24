@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="zh-cn" style="height: 100%">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>日程安排</title>
+</head>
+
+<body style="font: 1em sans-serif; height: 100%; margin: 0em">
+<form style="display: flex; flex-flow: column nowrap; height: 100%; margin: 0em auto; max-width: 64em">
+    <div style="background-color: #1b8bdf; height: 2.5em">
+        <div style="display: flex; height: 2.5em; justify-content: space-between">
+            <button id="modoru" type="button"
+                    style="background: transparent; border: none; color: white; cursor: pointer; font: 1em sans-serif; padding: 0em 0.5em">
+                返回
+            </button>
+        </div>
+    </div>
+    <div style="margin: 1em 1em 0.5em 1em">
+        <label>
+            日期：
+            <select id="date" name="date" style="font: 1em sans-serif; width: 50%" onchange="showTime(); deleteTable()">
+                <option value="none">--请选择日期--</option>
+            </select>
+        </label>
+    </div>
+    <div style="margin: 0.5em 1em 0.5em 1em">
+        <label>
+            时间：
+            <select id="time" name="time" style="font: 1em sans-serif; width: 50%"
+                    onchange="showPlace(); deleteTable()">
+                <option value="none">--请选择时间--</option>
+            </select>
+        </label>
+    </div>
+    <div style="margin: 0.5em 1em 0.5em 1em">
+        <label>
+            场地：
+            <select id="place" name="place" style="font: 1em sans-serif; width: 50%"
+                    onchange="showTable(); deleteTable()">
+                <option value="none">--请选择场地--</option>
+            </select>
+        </label>
+    </div>
+    <div id="table" style="width: 100%;"></div>
+</form>
+<script>
+    (function () {
+        "use strict";
+        document.getElementById("modoru").addEventListener("click", function () {
+            document.location.href = "./browse.html"
+        })
+    })()
+</script>
+<script>
+    var key = ["序号", "组别", "性别", "比赛项目", "赛次", "人数", "组数", "时间"];
+    var sukejuru = [
+        {
+            date: "10月24日",
+            time: [
+                {
+                    time: "上午",
+                    kind: [
+                        {
+                            kind: "径赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "七项全能-110米栏",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共2组",
+                                    period: "9：30"
+                                },
+                                {
+                                    no: "2",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "七项全能-110米栏",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共2组",
+                                    period: "9：40"
+                                },
+                                {
+                                    no: "3",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "110米栏",
+                                    round: "预赛",
+                                    num: "16人",
+                                    group: "共2组",
+                                    period: "9：50"
+                                },
+                                {
+                                    no: "4",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "100米",
+                                    round: "预赛",
+                                    num: "51人",
+                                    group: "共7组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "5",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "100米",
+                                    round: "预赛",
+                                    num: "16人",
+                                    group: "共2组",
+                                    period: "10：25"
+                                },
+                                {
+                                    no: "6",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "100米",
+                                    round: "预赛",
+                                    num: "54人",
+                                    group: "共7组",
+                                    period: "10：35"
+                                },
+                                {
+                                    no: "7",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "100米",
+                                    round: "预赛",
+                                    num: "30人",
+                                    group: "共4组",
+                                    period: "11：00"
+                                },
+                                {
+                                    no: "8",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "4×400米",
+                                    round: "预赛",
+                                    num: "14队",
+                                    group: "共2组",
+                                    period: "11：15"
+                                },
+                                {
+                                    no: "9",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "4×400米",
+                                    round: "预赛",
+                                    num: "13队",
+                                    group: "共2组",
+                                    period: "11：30"
+                                },
+                                {
+                                    no: "10",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "4×400米",
+                                    round: "预赛",
+                                    num: "9队",
+                                    group: "共2组",
+                                    period: "11：45"
+                                },
+                            ]
+                        },
+                        {
+                            kind: "田赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "铅球",
+                                    round: "决赛",
+                                    num: "47人",
+                                    group: "共1组",
+                                    period: "9：30"
+                                },
+                                {
+                                    no: "2",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "跳远",
+                                    round: "决赛",
+                                    num: "37人",
+                                    group: "共1组",
+                                    period: "9：30"
+                                },
+                                {
+                                    no: "3",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "标枪",
+                                    round: "决赛",
+                                    num: "20人",
+                                    group: "共1组",
+                                    period: "9：30"
+                                },
+                                {
+                                    no: "4",
+                                    level: "教工组",
+                                    gender: "男女子",
+                                    content: "拔河比赛",
+                                    round: "预赛",
+                                    num: "24队",
+                                    group: "共1组",
+                                    period: "9：30"
+                                },
+                                {
+                                    no: "5",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "七项全能-跳高",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共1组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "6",
+                                    level: "教工组",
+                                    gender: "男女子",
+                                    content: "心心相印",
+                                    round: "决赛",
+                                    num: "25队",
+                                    group: "共1组",
+                                    period: "10：30"
+                                },
+                                {
+                                    no: "7",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "七项全能-跳高",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共1组",
+                                    period: "11：00"
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    time: "下午",
+                    kind: [
+                        {
+                            kind: "径赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "100米",
+                                    round: "复赛",
+                                    num: "16人",
+                                    group: "共2组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "100米",
+                                    round: "复赛",
+                                    num: "16人",
+                                    group: "共2组",
+                                    period: "14：10"
+                                },
+                                {
+                                    no: "3",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "100米",
+                                    round: "决赛",
+                                    num: "34人",
+                                    group: "共5组",
+                                    period: "14：20"
+                                },
+                                {
+                                    no: "4",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "100米",
+                                    round: "决赛",
+                                    num: "25人",
+                                    group: "共4组",
+                                    period: "14：45"
+                                },
+                                {
+                                    no: "5",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "1500米",
+                                    round: "决赛",
+                                    num: "46人",
+                                    group: "共2组",
+                                    period: "15：05"
+                                },
+                                {
+                                    no: "6",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "1500米",
+                                    round: "决赛",
+                                    num: "45人",
+                                    group: "共1组",
+                                    period: "15：25"
+                                },
+                                {
+                                    no: "7",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "1500米",
+                                    round: "决赛",
+                                    num: "16人",
+                                    group: "共1组",
+                                    period: "15：45"
+                                },
+                                {
+                                    no: "8",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "1500米",
+                                    round: "决赛",
+                                    num: "9人",
+                                    group: "共2组",
+                                    period: "15：55"
+                                },
+                                {
+                                    no: "9",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "1500米",
+                                    round: "决赛",
+                                    num: "31人",
+                                    group: "共2组",
+                                    period: "16：06"
+                                },
+                                {
+                                    no: "10",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "1500米",
+                                    round: "决赛",
+                                    num: "29人",
+                                    group: "共1组",
+                                    period: "16：25"
+                                },
+                                {
+                                    no: "11",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "1500米",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "16：45"
+                                },
+                                {
+                                    no: "12",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "100米",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "16：50"
+                                },
+                                {
+                                    no: "13",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "100米",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "16：56"
+                                },
+                                {
+                                    no: "14",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "100米",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "17：00"
+                                },
+                                {
+                                    no: "15",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "七项全能-400米",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共2组",
+                                    period: "17：05"
+                                },
+                                {
+                                    no: "16",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "七项全能-400米",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共2组",
+                                    period: "17：15"
+                                },
+                                {
+                                    no: "17",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "4×400米",
+                                    round: "决赛",
+                                    num: "8队",
+                                    group: "共1组",
+                                    period: "17：25"
+                                },
+                                {
+                                    no: "18",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "4×400米",
+                                    round: "决赛",
+                                    num: "8队",
+                                    group: "共1组",
+                                    period: "17：35"
+                                },
+                                {
+                                    no: "19",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "4×400米",
+                                    round: "决赛",
+                                    num: "8队",
+                                    group: "共1组",
+                                    period: "17：45"
+                                },
+                                {
+                                    no: "20",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "4×400米",
+                                    round: "决赛",
+                                    num: "7队",
+                                    group: "共1组",
+                                    period: "17：55"
+                                },
+                            ]
+                        },
+                        {
+                            kind: "田赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "七项全能-标枪",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "跳高",
+                                    round: "决赛",
+                                    num: "38人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "3",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "铅球",
+                                    round: "决赛",
+                                    num: "36人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "4",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "跳远",
+                                    round: "预赛",
+                                    num: "17人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "5",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "七项全能-标枪",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共1组",
+                                    period: "14：30"
+                                },
+                                {
+                                    no: "6",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "铅球",
+                                    round: "决赛",
+                                    num: "25人",
+                                    group: "共1组",
+                                    period: "15：30"
+                                },
+                                {
+                                    no: "7",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "标枪",
+                                    round: "决赛",
+                                    num: "28人",
+                                    group: "共1组",
+                                    period: "15：30"
+                                },
+                                {
+                                    no: "8",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "跳高",
+                                    round: "决赛",
+                                    num: "16人",
+                                    group: "共1组",
+                                    period: "16：00"
+                                },
+                                {
+                                    no: "9",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "跳远",
+                                    round: "决赛",
+                                    num: "35人",
+                                    group: "共1组",
+                                    period: "16：00"
+                                },
+                            ]
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            date: "10月25日",
+            time: [
+                {
+                    time: "上午",
+                    kind: [
+                        {
+                            kind: "径赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "七项全能-100米栏",
+                                    round: "决赛",
+                                    num: "3人",
+                                    group: "共1组",
+                                    period: "8：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "100米栏",
+                                    round: "预赛",
+                                    num: "10人",
+                                    group: "共2组",
+                                    period: "8：10"
+                                },
+                                {
+                                    no: "3",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "200米",
+                                    round: "预赛",
+                                    num: "11人",
+                                    group: "共2组",
+                                    period: "8：30"
+                                },
+                                {
+                                    no: "4",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "200米",
+                                    round: "预赛",
+                                    num: "51人",
+                                    group: "共7组",
+                                    period: "8：40"
+                                },
+                                {
+                                    no: "5",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "200米",
+                                    round: "预赛",
+                                    num: "44人",
+                                    group: "共6组",
+                                    period: "9：15"
+                                },
+                                {
+                                    no: "6",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "200米",
+                                    round: "预赛",
+                                    num: "29人",
+                                    group: "共4组",
+                                    period: "9：45"
+                                },
+                                {
+                                    no: "7",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "800米",
+                                    round: "决赛",
+                                    num: "50人",
+                                    group: "共3组",
+                                    period: "10：05"
+                                },
+                                {
+                                    no: "8",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "800米",
+                                    round: "决赛",
+                                    num: "17人",
+                                    group: "共1组",
+                                    period: "10：30"
+                                },
+                                {
+                                    no: "9",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "800米",
+                                    round: "决赛",
+                                    num: "38人",
+                                    group: "共2组",
+                                    period: "10：40"
+                                },
+                                {
+                                    no: "10",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "800米",
+                                    round: "决赛",
+                                    num: "5人",
+                                    group: "共1组",
+                                    period: "11：00"
+                                },
+                                {
+                                    no: "11",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "100米栏",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "11：10"
+                                },
+                                {
+                                    no: "12",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "4×100米",
+                                    round: "决赛",
+                                    num: "15队",
+                                    group: "共2组",
+                                    period: "11：20"
+                                },
+                                {
+                                    no: "13",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "4×100米",
+                                    round: "决赛",
+                                    num: "14队",
+                                    group: "共2组",
+                                    period: "11：40"
+                                },
+                            ]
+                        },
+                        {
+                            kind: "田赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "七项全能-跳远",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共1组",
+                                    period: "8：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "铅球",
+                                    round: "决赛",
+                                    num: "50人",
+                                    group: "共1组",
+                                    period: "8：00"
+                                },
+                                {
+                                    no: "3",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "铁饼",
+                                    round: "决赛",
+                                    num: "37人",
+                                    group: "共1组",
+                                    period: "8：00"
+                                },
+                                {
+                                    no: "4",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "七项全能-跳远",
+                                    round: "决赛",
+                                    num: "11队",
+                                    group: "共1组",
+                                    period: "8：30"
+                                },
+                                {
+                                    no: "5",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "七项全能-跳高",
+                                    round: "决赛",
+                                    num: "3人",
+                                    group: "共1组",
+                                    period: "9：30"
+                                },
+                                {
+                                    no: "6",
+                                    level: "甲组",
+                                    gender: "男女子",
+                                    content: "拔河比赛",
+                                    round: "决赛",
+                                    num: "16队",
+                                    group: "共1组",
+                                    period: "9：30"
+                                },
+                                {
+                                    no: "7",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "跳远",
+                                    round: "决赛",
+                                    num: "43人",
+                                    group: "共1组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "8",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "投标",
+                                    round: "决赛",
+                                    num: "25人",
+                                    group: "共1组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "9",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "足球射门",
+                                    round: "决赛",
+                                    num: "25人",
+                                    group: "共1组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "10",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "定点投篮",
+                                    round: "决赛",
+                                    num: "25人",
+                                    group: "共1组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "11",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "夹乒乓球",
+                                    round: "决赛",
+                                    num: "22人",
+                                    group: "共1组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "12",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "夹乒乓球",
+                                    round: "决赛",
+                                    num: "21人",
+                                    group: "共1组",
+                                    period: "10：30"
+                                },
+                                {
+                                    no: "13",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "投标",
+                                    round: "决赛",
+                                    num: "25人",
+                                    group: "共1组",
+                                    period: "10：30"
+                                },
+                                {
+                                    no: "14",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "足球射门",
+                                    round: "决赛",
+                                    num: "25人",
+                                    group: "共1组",
+                                    period: "10：30"
+                                },
+                                {
+                                    no: "15",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "定点投篮",
+                                    round: "决赛",
+                                    num: "26人",
+                                    group: "共1组",
+                                    period: "10：30"
+                                },
+                                {
+                                    no: "16",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "七项全能-铁饼",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共1组",
+                                    period: "10：30"
+                                },
+                                {
+                                    no: "17",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "七项全能-铁饼",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共1组",
+                                    period: "11：00"
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    time: "下午",
+                    kind: [
+                        {
+                            kind: "径赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "七项全能-110米栏",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共2组",
+                                    period: "9：30"
+                                },
+                                {
+                                    no: "2",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "七项全能-110米栏",
+                                    round: "决赛",
+                                    num: "11人",
+                                    group: "共2组",
+                                    period: "9：40"
+                                },
+                                {
+                                    no: "3",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "110米栏",
+                                    round: "预赛",
+                                    num: "16人",
+                                    group: "共2组",
+                                    period: "9：50"
+                                },
+                                {
+                                    no: "4",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "100米",
+                                    round: "预赛",
+                                    num: "51人",
+                                    group: "共7组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "5",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "100米",
+                                    round: "预赛",
+                                    num: "16人",
+                                    group: "共2组",
+                                    period: "10：25"
+                                },
+                                {
+                                    no: "6",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "100米",
+                                    round: "预赛",
+                                    num: "54人",
+                                    group: "共7组",
+                                    period: "10：35"
+                                },
+                                {
+                                    no: "7",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "100米",
+                                    round: "预赛",
+                                    num: "30人",
+                                    group: "共4组",
+                                    period: "11：00"
+                                },
+                                {
+                                    no: "8",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "4×400米",
+                                    round: "预赛",
+                                    num: "14队",
+                                    group: "共2组",
+                                    period: "11：15"
+                                },
+                                {
+                                    no: "9",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "4×400米",
+                                    round: "预赛",
+                                    num: "13队",
+                                    group: "共2组",
+                                    period: "11：30"
+                                },
+                            ]
+                        },
+                        {
+                            kind: "田赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "七项全能-铅球",
+                                    round: "决赛",
+                                    num: "3人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "铁饼",
+                                    round: "决赛",
+                                    num: "36人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "3",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "三级跳远",
+                                    round: "决赛",
+                                    num: "24人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "4",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "跳高",
+                                    round: "决赛",
+                                    num: "16人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "5",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "铅球",
+                                    round: "决赛",
+                                    num: "29人",
+                                    group: "共1组",
+                                    period: "14：20"
+                                },
+                                {
+                                    no: "6",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "铁饼",
+                                    round: "决赛",
+                                    num: "31人",
+                                    group: "共1组",
+                                    period: "15：30"
+                                },
+                                {
+                                    no: "7",
+                                    level: "教工组",
+                                    gender: "女子",
+                                    content: "跳高",
+                                    round: "决赛",
+                                    num: "21人",
+                                    group: "共1组",
+                                    period: "15：30"
+                                },
+                                {
+                                    no: "8",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "三级跳远",
+                                    round: "决赛",
+                                    num: "32人",
+                                    group: "共1组",
+                                    period: "15：30"
+                                },
+                                {
+                                    no: "9",
+                                    level: "教工组",
+                                    gender: "男子",
+                                    content: "铅球",
+                                    round: "决赛",
+                                    num: "36人",
+                                    group: "共1组",
+                                    period: "16：00"
+                                },
+                            ]
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            date: "10月26日",
+            time: [
+                {
+                    time: "上午",
+                    kind: [
+                        {
+                            kind: "径赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "400米栏",
+                                    round: "预赛",
+                                    num: "9人",
+                                    group: "共2组",
+                                    period: "8：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "400米栏",
+                                    round: "预赛",
+                                    num: "11人",
+                                    group: "共2组",
+                                    period: "8：16"
+                                },
+                                {
+                                    no: "3",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "400米",
+                                    round: "预赛",
+                                    num: "47人",
+                                    group: "共6组",
+                                    period: "8：32"
+                                },
+                                {
+                                    no: "4",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "400米",
+                                    round: "预赛",
+                                    num: "14人",
+                                    group: "共2组",
+                                    period: "9：02"
+                                },
+                                {
+                                    no: "5",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "400米",
+                                    round: "预赛",
+                                    num: "44人",
+                                    group: "共6组",
+                                    period: "9：12"
+                                },
+                                {
+                                    no: "6",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "400米",
+                                    round: "预赛",
+                                    num: "23人",
+                                    group: "共3组",
+                                    period: "9：42"
+                                },
+                                {
+                                    no: "7",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "4x100米",
+                                    round: "预赛",
+                                    num: "17人",
+                                    group: "共3组",
+                                    period: "9：57"
+                                },
+                                {
+                                    no: "8",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "4×400米",
+                                    round: "预赛",
+                                    num: "17队",
+                                    group: "共3组",
+                                    period: "10：27"
+                                },
+                                {
+                                    no: "9",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "4×400米",
+                                    round: "预赛",
+                                    num: "10队",
+                                    group: "共2组",
+                                    period: "10：57"
+                                },
+                                {
+                                    no: "10",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "4×400米",
+                                    round: "预赛",
+                                    num: "13队",
+                                    group: "共2组",
+                                    period: "11：17"
+                                },
+                                {
+                                    no: "11",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "400米",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "11：37"
+                                },
+                                {
+                                    no: "12",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "400米",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "11：42"
+                                },
+                                {
+                                    no: "13",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "400米",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "11：47"
+                                },
+                                {
+                                    no: "14",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "400米",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "11：52"
+                                },
+                            ]
+                        },
+                        {
+                            kind: "田赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "跳高",
+                                    round: "决赛",
+                                    num: "26人",
+                                    group: "共1组",
+                                    period: "8：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "跳远",
+                                    round: "决赛",
+                                    num: "50人",
+                                    group: "共1组",
+                                    period: "8：00"
+                                },
+                                {
+                                    no: "3",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "七项全能-跳远",
+                                    round: "决赛",
+                                    num: "3人",
+                                    group: "共1组",
+                                    period: "8：00"
+                                },
+                                {
+                                    no: "4",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "跳远",
+                                    round: "决赛",
+                                    num: "24人",
+                                    group: "共1组",
+                                    period: "8：30"
+                                },
+                                {
+                                    no: "5",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "标枪",
+                                    round: "决赛",
+                                    num: "39人",
+                                    group: "共1组",
+                                    period: "8：30"
+                                },
+                                {
+                                    no: "6",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "七项全能-标枪",
+                                    round: "决赛",
+                                    num: "3人",
+                                    group: "共1组",
+                                    period: "10：00"
+                                },
+                                {
+                                    no: "7",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "铁饼",
+                                    round: "决赛",
+                                    num: "19人",
+                                    group: "共1组",
+                                    period: "10：30"
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    time: "下午",
+                    kind: [
+                        {
+                            kind: "径赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "400米栏",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "400米栏",
+                                    round: "决赛",
+                                    num: "8人",
+                                    group: "共1组",
+                                    period: "14：05"
+                                },
+                                {
+                                    no: "3",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "400米栏",
+                                    round: "决赛",
+                                    num: "3人",
+                                    group: "共1组",
+                                    period: "14：10"
+                                },
+                                {
+                                    no: "4",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "4x100米",
+                                    round: "决赛",
+                                    num: "8队",
+                                    group: "共1组",
+                                    period: "14：15"
+                                },
+                                {
+                                    no: "5",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "4x100米",
+                                    round: "决赛",
+                                    num: "8队",
+                                    group: "共1组",
+                                    period: "14：25"
+                                },
+                                {
+                                    no: "6",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "4x100米",
+                                    round: "决赛",
+                                    num: "8队",
+                                    group: "共1组",
+                                    period: "14：35"
+                                },
+                                {
+                                    no: "7",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "4x100米",
+                                    round: "决赛",
+                                    num: "8队",
+                                    group: "共1组",
+                                    period: "14：45"
+                                },
+                                {
+                                    no: "8",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "七项全能-800米",
+                                    round: "决赛",
+                                    num: "3队",
+                                    group: "共1组",
+                                    period: "14：55"
+                                },
+                                {
+                                    no: "9",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "5000米",
+                                    round: "决赛",
+                                    num: "42人",
+                                    group: "共2组",
+                                    period: "15：05"
+                                },
+                            ]
+                        },
+                        {
+                            kind: "田赛",
+                            table: [
+                                {
+                                    no: "1",
+                                    level: "甲组",
+                                    gender: "男子",
+                                    content: "标枪",
+                                    round: "决赛",
+                                    num: "27人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "2",
+                                    level: "乙组",
+                                    gender: "女子",
+                                    content: "三级跳远",
+                                    round: "决赛",
+                                    num: "10人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "3",
+                                    level: "乙组",
+                                    gender: "男子",
+                                    content: "跳高",
+                                    round: "决赛",
+                                    num: "32人",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                                {
+                                    no: "4",
+                                    level: "甲组",
+                                    gender: "女子",
+                                    content: "三级跳远",
+                                    round: "决赛",
+                                    num: "31队",
+                                    group: "共1组",
+                                    period: "14：00"
+                                },
+                            ]
+                        },
+                    ]
+                },
+            ]
+        },
+    ];
+    var val, vall, valll;
+    (function showDate() {
+        var len = sukejuru.length;
+        for (var i = 0; i < len; i++) {
+            var dateOpt = document.createElement('option');
+            dateOpt.innerText = sukejuru[i]['date'];
+            dateOpt.value = dateOpt.innerText;
+            document.getElementById("date").appendChild(dateOpt);
+        }
+    })();
+
+    function deleteTable() {
+        var elem = document.getElementById("table");
+        if (elem.childElementCount > 1) {
+            var fuck = elem.children;
+            for (var num = 0; num < fuck.length; num++) {
+                elem.removeChild(fuck[num]);
+            }
+        }
+    }
+
+    function showTime() {
+        val = document.getElementById("date").selectedIndex;
+        if (val) {
+            document.getElementById("time").length = 1;
+            var timeLen = sukejuru[val - 1]["time"].length;
+            for (var j = 0; j < timeLen; j++) {
+                var timeOpt = document.createElement('option');
+                timeOpt.innerText = sukejuru[val - 1]["time"][j]["time"];
+                timeOpt.value = timeOpt.innerText;
+                document.getElementById("time").appendChild(timeOpt);
+            }
+        }
+    };
+
+    function showPlace() {
+        vall = document.getElementById("time").selectedIndex;
+        if (vall) {
+            document.getElementById("place").length = 1;
+            var placeLen = sukejuru[val - 1]["time"][vall - 1]["kind"].length;
+            for (var k = 0; k < placeLen; k++) {
+                var placeOpt = document.createElement('option');
+                placeOpt.innerText = sukejuru[val - 1]["time"][vall - 1]["kind"][k]["kind"];
+                placeOpt.value = placeOpt.innerText;
+                document.getElementById("place").appendChild(placeOpt);
+            }
+        }
+    };
+
+    function showTable() {
+        valll = document.getElementById("place").selectedIndex;
+        if (valll) {
+            var array = Array(sukejuru[val - 1]["time"][vall - 1]["kind"][valll - 1]["table"])[0];
+            var el1 = document.createElement('table');
+            var el2 = document.createElement('thead');
+            el1.appendChild(el2);
+            var el3 = document.createElement('tr');
+            el2.appendChild(el3);
+            for (var m = 0; m < key.length; m++) {
+                var el4 = document.createElement('th');
+                el4.innerHTML = key[m];
+                el4.style.padding = "0.6em";
+                el4.style.background = "#555 nonrepeat scroll 0 0";
+                el4.style.border = "1px solid #777";
+                el3.appendChild(el4);
+            }
+            var el5 = document.createElement('tbody');
+            el1.appendChild(el5);
+            for (var n = 0; n < array.length; n++) {
+                var el6 = document.createElement("tr");
+                for (var p in array[n]) {
+                    var el7 = document.createElement('td');
+                    el7.innerHTML = array[n][p];
+                    el7.style.padding = "0.6em";
+                    el7.style.border = "1px solid #777";
+                    el6.appendChild(el7);
+                    el5.appendChild(el6);
+                }
+                el1.appendChild(el6);
+            }
+            el1.style.font = "0.7em";
+            el1.style.borderCollapse = "collapse";
+            document.getElementById("table").appendChild(el1);
+        }
+    };
+</script>
+</body>
+
+</html>
